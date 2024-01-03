@@ -58,7 +58,7 @@ SELECT
        	households_200k_or_more, 
         round((total_households * households_200k_or_more),0) as ultra_wealthy_households
 FROM
-wealthy_households2018;
+	wealthy_households2018;
 ```
 
 ### Limitations
