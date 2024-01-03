@@ -138,7 +138,7 @@ Central Colorado, South Texas and the Dallas-Fort Worth area, the Pacific Northw
 
 
 
-To view the entire dashboard on Tableau click [here](https://public.tableau.com/app/profile/carl.ussery/viz/WealthyHouseholdsPreandPostPandemic/Ultra18v22#1))
+To view the entire dashboard on Tableau click [here](https://public.tableau.com/app/profile/carl.ussery/viz/WealthyHouseholdsPreandPostPandemic/Ultra18v22#1)
 
 ### Next Steps
 
