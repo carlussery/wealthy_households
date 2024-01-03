@@ -52,12 +52,13 @@ the datasets to MySQL for further analysis.
 In MySQL, I ran the following query to calculate the number of "ultra wealthy" $200,000+ median income households for each county:
 ```sql
 SELECT 
-		geo_code, 
-		county, 
+	geo_code, 
+	county, 
         total_households, 
-       households_200k_or_more, 
+       	households_200k_or_more, 
         round((total_households * households_200k_or_more),0) as ultra_wealthy_households
-FROM wealthy_households2018;
+FROM
+wealthy_households2018;
 ```
 
 ### Limitations
@@ -70,38 +71,46 @@ Secondly, I discovered that high post-pandemic inflation could skew the results.
 
 In order to compare between pre and post-pandemic, I had to combine the two datasets.  In SQL, I used the   `JOIN` fuction to do this as illustrated in the following query:
 ```sql
-CREATE TABLE before_and_after AS
+CREATE TABLE
+	before_and_after AS
 SELECT
 	a.geo_code, a.county, 
-    a.total_households as total_households_2018,
-    b.total_households as total_households_2022,
-    b.total_households - a.total_households as total_diff,
-    round(((b.total_households/a.total_households)-1),3) as percent_change,
-    a.percent_wealthy_households as wealth_percent_18,
-    b.percent_wealthy_households as wealth_percent_22,
-    a.total_wealthy_households as total_wealthy_2018,
-    b.total_wealthy_households as total_wealthy_2022,
-    b.total_wealthy_households - a.total_wealthy_households as wealthy_diff,
-    round(((b.total_wealthy_households/a.total_wealthy_households)-1),3) as wealthy_percent_change
-FROM wealthy_households2018 as a
-JOIN wealthy_households2022 as b
-ON a.geo_code = b.geo_code;
+    	a.total_households as total_households_2018,
+    	b.total_households as total_households_2022,
+    	b.total_households - a.total_households as total_diff,
+	round(((b.total_households/a.total_households)-1),3) as percent_change,
+    	a.percent_wealthy_households as wealth_percent_18,
+    	b.percent_wealthy_households as wealth_percent_22,
+    	a.total_wealthy_households as total_wealthy_2018,
+    	b.total_wealthy_households as total_wealthy_2022,
+    	b.total_wealthy_households - a.total_wealthy_households as wealthy_diff,
+    	round(((b.total_wealthy_households/a.total_wealthy_households)-1),3) as wealthy_percent_change
+FROM
+	wealthy_households2018 as a
+JOIN
+	wealthy_households2022 as b
+ON
+	a.geo_code = b.geo_code;
 ```
 I did the same for the more exclusive ultra-wealthy ($200K+):
 ```sql
-CREATE TABLE ultra_wealthy_ba AS
+CREATE TABLE
+	ultra_wealthy_ba AS
 SELECT 
-a.geo_code, a.county, 
-a.total_households as total_hh_2018, 
-b.total_households as total_hh_2022, 
-b.total_households - a.total_households as diff,
-a.households_200k_or_more as percent_18, b.households_200k_or_more as percent_22,
-a.ultra_wealthy_households as ultra_wealthy_18, b.ultra_wealthy_households as ultra_wealthy_22,
-b.ultra_wealthy_households - a.ultra_wealthy_households as difference,
-round(((b.ultra_wealthy_households/a.ultra_wealthy_households)-1),2) as percent
-FROM ultra_wealthy2018 a
-JOIN ultra_wealthy2022 b
-ON a.geo_code = b.geo_code;
+	a.geo_code, a.county, 
+	a.total_households as total_hh_2018, 
+	b.total_households as total_hh_2022, 
+	b.total_households - a.total_households as diff,
+	a.households_200k_or_more as percent_18, b.households_200k_or_more as percent_22,
+	a.ultra_wealthy_households as ultra_wealthy_18, b.ultra_wealthy_households as ultra_wealthy_22,
+	b.ultra_wealthy_households - a.ultra_wealthy_households as difference,
+	round(((b.ultra_wealthy_households/a.ultra_wealthy_households)-1),2) as percent
+FROM
+	ultra_wealthy2018 a
+JOIN
+	ultra_wealthy2022 b
+ON
+	a.geo_code = b.geo_code;
 ```
 In order to make more sense of this data, I exported the tables back into excel, split the columns for county and state, then uploaded the tables to Tableau to visualize the geo-data. 
 
